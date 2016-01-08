@@ -175,8 +175,10 @@ activity_data_cc$weekday <- factor(activity_data_cc$weekday,
 # calcultation of average number of steps per interval and per day of week
 activity_data_cc_day_int <- group_by(activity_data_cc, weekday, interval) %>% 
         summarise(day_int_avg = mean(steps))
-ggplot(data = activity_data_cc_day_int, aes(x = interval, y = day_int_avg, color = weekday)) + 
-        geom_line() + stat_smooth(se = FALSE, color = "black", size = 0.5) + facet_grid(facets = weekday ~ .) + 
+ggplot(data = activity_data_cc_day_int, 
+       aes(x = interval, y = day_int_avg, color = weekday)) + 
+        geom_line() + stat_smooth(se = FALSE, color = "black", size = 0.5) + 
+        facet_grid(facets = weekday ~ .) + 
         scale_x_continuous(labels = x_interval_labels, breaks = x_interval) + 
         ggtitle("Average number of steps per interval per day") + 
         xlab("Interval") + 
@@ -231,7 +233,8 @@ The selected imputing strategy resulted in an increase of both the mean and the 
 
 By creating a variable that identifies weekends or weekdays and additionally grouping the data by interval a time series panel plot is produced displaying number of steps per interval faceted by week part.
 ```{r week_part, fig.path='./figure/'}
-activity_data_imp$week_part <- ifelse(weekdays(activity_data_imp$date) %in% c("Saturday", "Sunday"), "Weekend", "Weekday")
+activity_data_imp$week_part <- ifelse(weekdays(activity_data_imp$date) %in% 
+                                              c("Saturday", "Sunday"), "Weekend", "Weekday")
 activity_data_imp$week_part <- as.factor(activity_data_imp$week_part)
 activity_data_imp_int_week <- group_by(activity_data_imp, interval, week_part) %>% 
         summarise(avg_steps = mean(steps))
@@ -239,7 +242,8 @@ activity_data_imp_int_week <- group_by(activity_data_imp, interval, week_part) %
 ggplot(data = activity_data_imp_int_week, aes(x = interval, y = avg_steps, color = week_part)) + 
         geom_line() + facet_grid(facets = week_part ~ .) + 
         scale_x_continuous(labels = x_interval_labels, breaks = x_interval) + 
-        ggtitle("Time series of average number of steps per interval \n divided part of week (weekend or weekday)") + 
+        ggtitle("Time series of average number of steps per interval 
+                \n divided part of week (weekend or weekday)") + 
         xlab("Interval") + 
         ylab("Average number of steps per interval") + 
         theme(legend.position = "none")
