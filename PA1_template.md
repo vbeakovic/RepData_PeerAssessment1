@@ -1,5 +1,9 @@
 # Reproducible Research: Peer Assessment 1
+Valter Beaković  
+January 8, 2016  
 #### **Note**
+**Use rmarkdown::render("PA1_template.Rmd") to knit the md and html files when reproducing the research!**
+
 Set locale to English (default is Croatian on the PC used to produce the document)
 
 ```r
@@ -83,15 +87,15 @@ Histogram of steps per day:
 
 ```r
 ggplot(data = activity_data_cc_steps_day, aes(x = total_steps_day)) + 
-        geom_histogram(binwidth = 5000, color = "white", fill = "skyblue") + 
-        # scale_x_continuous(limits = c(0, 25000)) + 
-#         scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5)) +  
+        geom_histogram(breaks = seq(0, 25000, by = 5000), color = "white", fill = "skyblue") + 
+        scale_x_continuous(limits = c(-0, 25000)) + 
+        scale_y_continuous(limits = c(0, 35), breaks = seq(0, 35, 5)) +  
         ggtitle("Histogram of Steps per Day") + 
         xlab("Steps per Day") + 
         ylab("Count")
 ```
 
-![](PA1_template_files/figure-html/histogram_steps_day-1.png) 
+![](./figure/histogram_steps_day-1.png) 
 
 The mean of steps per day is:
 
@@ -121,7 +125,7 @@ number of steps taken (y-axis) is created
 ```r
 # average steps per interval
 activity_data_cc_interval_avg <- group_by(activity_data_cc, interval) %>%
-        summarise(interval_avg = mean(steps))
+        summarise(interval_avg = as.integer(round(mean(steps))))
 # a bit of work to have a nicer x axis
 x_interval_labels <- as.character(activity_data_cc_interval_avg$interval)
 x_interval_labels <- sub("(^\\d$){1}", "00:0\\1" , x_interval_labels)
@@ -140,7 +144,29 @@ ggplot(data = activity_data_cc_interval_avg, aes(x = interval, y = interval_avg)
         ylab("Average number of step")
 ```
 
-![](PA1_template_files/figure-html/time_series-1.png) 
+![](./figure/time_series-1.png) 
+Finding the interval with the maximum average number of steps:
+
+```r
+# Interval with maximum average number of steps
+activity_data_cc_interval_avg$interval[which.max(activity_data_cc_interval_avg$interval_avg)]
+```
+
+```
+## [1] 835
+```
+
+```r
+# Maximum average number of steps in interval
+activity_data_cc_interval_avg$interval_avg[which.max(activity_data_cc_interval_avg$interval_avg)]
+```
+
+```
+## [1] 206
+```
+
+
+
 
 ## Imputing missing values
 
@@ -216,7 +242,7 @@ ggplot(data = activity_data_cc_day_int, aes(x = interval, y = day_int_avg, color
         theme(legend.position = "none")
 ```
 
-![](PA1_template_files/figure-html/panel_plot_interval_day-1.png) 
+![](./figure/panel_plot_interval_day-1.png) 
 
 From the panel plot it looks like Monday, Tuesday, Wednesday and Thursday have a somewhat similar pattern, Friday and Staurday have similar patterns while Sunday has a pattern of its own. From the plot a feasible imputing strategy could be to replace the missing values of steps with the average number of step in the corresponding interval and for the same day. This strategy will be used the impute the missing values:
 
@@ -243,15 +269,15 @@ Histogram of steps per day:
 
 ```r
 ggplot(data = activity_data_imp_steps_day, aes(x = total_steps_day)) + 
-        geom_histogram(binwidth = 5000, color = "white", fill = "skyblue") + 
-        # scale_x_continuous(limits = c(0, 25000)) + 
-#         scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5)) +  
+        geom_histogram(breaks = seq(0, 25000, by = 5000), color = "white", fill = "skyblue") +  
+        scale_x_continuous(limits = c(0, 25000)) + 
+        scale_y_continuous(limits = c(0, 35), breaks = seq(0, 35, 5)) +  
         ggtitle("Histogram of Steps per Day with Imputed Values") + 
         xlab("Steps per Day") + 
         ylab("Count")
 ```
 
-![](PA1_template_files/figure-html/histogram_steps_day_imputed-1.png) 
+![](./figure/histogram_steps_day_imputed-1.png) 
 
 The mean of steps per day with imputed values is:
 
@@ -295,6 +321,6 @@ ggplot(data = activity_data_imp_int_week, aes(x = interval, y = avg_steps, color
         theme(legend.position = "none")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-1-1.png) 
+![](./figure/week_part-1.png) 
 
 From the panel plot it may be noted that there are differnces in the activity patterns between weekdays and weekends. During weekdays the maximum average numer of steps is above 200 while the maxiumum average number of steps during weekends is below 200. Both maximums occur between 8 and 10 AM. Activities during weekends start about 2 horus later. It is also noticable that during weekends the average number of steps after 10:00AM is higher than during weekdays and that activities stop about an hour later.
