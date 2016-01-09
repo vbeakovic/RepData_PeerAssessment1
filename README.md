@@ -20,7 +20,7 @@ The scope of the assignment is to produce a reproducible research analysing the 
 * PA1_template.md - markdown file produced by renderging the Rmd file
 * PA1_template.html - html file produced by rendering the Rmd file
 
-## Explanation about the Rmd scripts
+## Explanation about the Rmd script
 
 The script follows the guidelines of the course assignment and answers the following questions:
 
