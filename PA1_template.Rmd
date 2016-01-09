@@ -200,7 +200,8 @@ for (i in seq_along(activity_data_na$steps)) {
                 activity_data_cc_day_int$interval == activity_data_na$interval[i] & 
                         activity_data_cc_day_int$weekday == weekdays(activity_data_na$date[i])]
 }
-# merge data frame with complete cases and data frame with imputed values, after merging sorting by date and interval
+# merge data frame with complete cases and data frame with imputed values, 
+# after merging sorting by date and interval
 activity_data_imp <- rbind(activity_data_cc[-4], activity_data_na)
 activity_data_imp <- arrange(activity_data_imp, date, interval)
 ```
