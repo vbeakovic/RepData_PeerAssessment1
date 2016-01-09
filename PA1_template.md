@@ -145,6 +145,7 @@ ggplot(data = activity_data_cc_interval_avg, aes(x = interval, y = interval_avg)
 ```
 
 ![](./figure/time_series-1.png) 
+
 Finding the interval with the maximum average number of steps:
 
 ```r
@@ -215,7 +216,7 @@ sum(is.na(activity_data))
 From the result above it is clear that only the variable "steps" has missing 
 values and an imputing strategy has to be defined to fill in missing values.
 To select an imputing strategy a panel plot showing average number of steps per
-interval per each day of week. The panel plot is prodced using only complete 
+interval per each day of week. The panel plot is produced using only complete 
 cases.
 
 ```r
@@ -246,9 +247,10 @@ ggplot(data = activity_data_cc_day_int,
 
 ![](./figure/panel_plot_interval_day-1.png) 
 
-From the panel plot it looks like Monday, Tuesday, Wednesday and Thursday have a somewhat similar pattern, Friday and Staurday have similar patterns while Sunday has a pattern of its own. From the plot a feasible imputing strategy could be to replace the missing values of steps with the average number of step in the corresponding interval and for the same day. This strategy will be used the impute the missing values:
+From the panel plot it looks like Monday, Tuesday, Wednesday and Thursday have a somewhat similar pattern, Friday and Staurday have similar patterns while Sunday has a pattern of its own. From the plot a feasible imputing strategy could be to replace the missing values of steps with the average number of steps in the corresponding interval and for the same day. This strategy will be used the impute the missing values:
 
 ```r
+# imouting mising values with the average of the same interval and same day as missing value
 activity_data_na <- activity_data[!complete.cases(activity_data), ]
 for (i in seq_along(activity_data_na$steps)) {
         activity_data_na$steps[i] <- activity_data_cc_day_int$day_int_avg[activity_data_cc_day_int$interval == activity_data_na$interval[i] &   activity_data_cc_day_int$weekday == weekdays(activity_data_na$date[i])]
@@ -262,7 +264,6 @@ By grouping the observations with imputed values by day and summing up the total
 interval the a total number of steps per day are calculated:
 
 ```r
-# select only rows not containg observation with NA
 activity_data_imp_steps_day <- group_by(activity_data_imp, date) %>% 
         summarise(total_steps_day = as.integer(round(sum(steps))))
 ```
