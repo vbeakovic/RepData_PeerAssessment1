@@ -133,7 +133,8 @@ x_interval_labels <- sub("(^\\d\\d$){1}", "00:\\1" , x_interval_labels)
 x_interval_labels <- sub("(^\\d)(\\d\\d$){1}", "0\\1:\\2" , x_interval_labels)
 x_interval_labels <- sub("(^\\d\\d)(\\d\\d$){1}", "\\1:\\2" , x_interval_labels)
 x_interval_labels <- x_interval_labels[seq(1, length(x_interval_labels), 24)]
-x_interval <- activity_data_cc_interval_avg$interval[seq(1, length(activity_data_cc_interval_avg$interval), 24)]
+x_interval <- activity_data_cc_interval_avg$interval[
+        seq(1,length(activity_data_cc_interval_avg$interval),  24)]
 
 # time series plotting 
 ggplot(data = activity_data_cc_interval_avg, aes(x = interval, y = interval_avg)) + 
@@ -150,7 +151,8 @@ Finding the interval with the maximum average number of steps:
 
 ```r
 # Interval with maximum average number of steps
-activity_data_cc_interval_avg$interval[which.max(activity_data_cc_interval_avg$interval_avg)]
+activity_data_cc_interval_avg$interval[
+        which.max(activity_data_cc_interval_avg$interval_avg)]
 ```
 
 ```
@@ -159,7 +161,8 @@ activity_data_cc_interval_avg$interval[which.max(activity_data_cc_interval_avg$i
 
 ```r
 # Maximum average number of steps in interval
-activity_data_cc_interval_avg$interval_avg[which.max(activity_data_cc_interval_avg$interval_avg)]
+activity_data_cc_interval_avg$interval_avg[
+        which.max(activity_data_cc_interval_avg$interval_avg)]
 ```
 
 ```
