@@ -6,8 +6,7 @@ This repository is a course project for the Reproducible Research Course on
 Coursera. This is the first course project of the two projects that are part of this course.
 
 ## Data used for this assignment
-This assignment uses data provided at the course website 
-the <a href="https://www.coursera.org/">Coursera</a>. More  information about the data 
+This assignment uses data provided at the course website (<a href="https://www.coursera.org/">Coursera</a>). More  information about the data 
 may be found in the the <a href="CodeBook.md">CodeBook.md</a> in the root of this repository.
 
 ## Scope of the assignment
